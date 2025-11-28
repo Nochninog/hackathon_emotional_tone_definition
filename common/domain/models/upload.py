@@ -23,4 +23,4 @@ class Upload:
     filename: str
     has_validation: bool = False
 
-    texts: list[Text] = field(default_factory=list)
+    texts: list[Text] | None = None

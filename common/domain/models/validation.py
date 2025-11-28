@@ -12,6 +12,6 @@ class Validation:
     validation_id: int
     text_id: int
 
-    label: str
+    label: int
 
     text: Text | None = None

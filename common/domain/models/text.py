@@ -23,8 +23,8 @@ class Text:
 
     status: TextStatus
     content: str
-    predicted_label: str | None = None
+    predicted_label: int | None = None
     src: str | None = None
 
     upload: Upload | None = None
-    validations: list[Validation] = field(default_factory=list)
+    validation: Validation | None = None
