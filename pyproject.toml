@@ -1,0 +1,11 @@
+[project]
+name = "emotional-tone-definition"
+version = "0.1.0"
+description = "Service for defining of emotional tone in reviews"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.122.0",
+    "pydantic>=2.12.5",
+    "sqlalchemy>=2.0.44",
+]
