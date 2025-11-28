@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from collections.abc import Iterable, Sequence
 
-from ....domain.models import Validation
+from ...domain.models import Validation
 
 
 class IValidationStorage(ABC):

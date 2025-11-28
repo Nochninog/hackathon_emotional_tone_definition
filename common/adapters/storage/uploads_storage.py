@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from collections.abc import Sequence
 
-from ....domain.models import Upload, UploadStatus
+from ...domain.models import Upload, UploadStatus
 
 
 class IUploadStorage(ABC):

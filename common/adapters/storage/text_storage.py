@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from collections.abc import Iterable, Sequence
 
-from ....domain.models import Text, TextStatus
+from ...domain.models import Text, TextStatus
 
 
 class ITextStorage(ABC):
