@@ -1,0 +1,30 @@
+main{
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+    background-color: #E6E9ED;
+}
+
+.header-container{
+
+    h1{
+        margin: 0;
+        font-size: 23px;
+        max-width: 350px;
+        font-weight: 800;
+    }
+}
+
+
+.upload-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 200px;
+
+    h2{
+        font-size: 23px;
+        font-weight: 600;
+    }
+}
+
