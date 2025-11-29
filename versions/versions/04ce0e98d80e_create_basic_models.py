@@ -50,7 +50,7 @@ def upgrade() -> None:
     op.create_table("validations",
     sa.Column("validation_id", sa.Integer(), autoincrement=True, nullable=False),
     sa.Column("text_id", sa.Integer(), nullable=False),
-    sa.Column("label", sa.String(), nullable=False),
+    sa.Column("label", sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(["text_id"], ["texts.text_id"] ),
     sa.PrimaryKeyConstraint("validation_id"),
     )

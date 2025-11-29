@@ -17,6 +17,6 @@ class ValidationORM(Base):
     validation_id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     text_id: Mapped[int] = mapped_column(ForeignKey("texts.text_id"), nullable=False)
 
-    label: Mapped[int] = mapped_column(String, nullable=False)
+    label: Mapped[int] = mapped_column(Integer, nullable=False)
 
     text: Mapped["TextORM"] = relationship(back_populates="validation")  # noqa: UP037

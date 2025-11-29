@@ -15,6 +15,7 @@ class ITextStorage(ABC):
         self,
         upload_id: int,
         contents: Iterable[str],
+        srcs: Iterable[str | None],
     ) -> Sequence[Text]:
         raise NotImplementedError
 

@@ -57,6 +57,19 @@ class SqlAlchemyUploadStorage(IUploadStorage):
 
         return upload_orm_to_model(upload)
 
+    async def get_all_uploads_with_search(
+        self,
+        search: str,
+    ) -> Sequence[Upload]:
+        query = (
+            select(UploadORM)
+            .where(UploadORM.filename.ilike(f"%{search.lower()}%"))
+            .order_by(UploadORM.uploaded_at.desc())
+        )
+        uploads = await self._session.scalars(query)
+        return upload_orms_to_models(uploads)
+
+
     async def update_upload_status(
         self,
         upload_id: int,

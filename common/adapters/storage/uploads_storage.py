@@ -27,6 +27,13 @@ class IUploadStorage(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    async def get_all_uploads_with_search(
+        self,
+        search: str,
+    ) -> Sequence[Upload]:
+        raise NotImplementedError
+
+    @abstractmethod
     async def get_upload_by_id(
         self,
         upload_id: int,

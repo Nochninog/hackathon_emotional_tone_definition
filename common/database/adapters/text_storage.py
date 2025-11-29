@@ -23,14 +23,16 @@ class SqlAlchemyTextStorage(ITextStorage):
         self,
         upload_id: int,
         contents: Iterable[str],
+        srcs: Iterable[str | None],
     ) -> Sequence[Text]:
         texts = tuple(
             TextORM(
                 upload_id=upload_id,
                 content=content,
                 status=TextStatus.NEW,
+                src=src,
             )
-            for content in contents
+            for content, src in zip(contents, srcs, strict=True)
         )
 
         self._session.add_all(texts)
