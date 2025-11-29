@@ -80,6 +80,10 @@ extend-ignore = ["RUF001", "RUF003", "PLR0913", "PLR0911"]
 
 [tool.ruff.lint.flake8-type-checking]
 quote-annotations = true
+runtime-evaluated-base-classes = [
+	"pydantic.BaseModel",
+	"sqlalchemy.orm.DeclarativeBase",
+]
 
 [tool.ruff.lint.isort]
 section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
