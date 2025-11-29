@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+
+    ports:
+      - "5672:5672"    # AMQP
+      - "15672:15672"  # Web UI
+
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - app_network
+  
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+
+    ports:
+      - "5430:5432"
+
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+  uploads_service:
+    build:
+      context: .
+      dockerfile: dockerfiles/uploads_service.dockerfile
+    
+    ports:
+      - "8080:8080"
+    
+    env_file: .env
+    depends_on:
+      - rabbitmq
+      - postgres
+
+    command: python -m uvicorn app.uploads_control_service.main:app --host 0.0.0.0 --port 8080
+    networks:
+      - app_network
+
+volumes:
+  rabbitmq_data:
+  pg_data:
+
+networks:
+  app_network:
+    driver: bridge

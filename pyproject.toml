@@ -5,7 +5,122 @@ description = "Service for defining of emotional tone in reviews"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "aio-pika>=9.5.8",
+    "aiopath>=0.7.7",
+    "alembic>=1.17.2",
+    "asyncpg>=0.31.0",
     "fastapi>=0.122.0",
+    "pandas>=2.3.3",
+    "psycopg2>=2.9.11 ; sys_platform == 'win32'",
+    "psycopg2-binary>=2.9.10 ; sys_platform == 'darwin' or sys_platform == 'linux'",
     "pydantic>=2.12.5",
+    "python-dotenv>=1.2.1",
+    "python-multipart>=0.0.20",
     "sqlalchemy>=2.0.44",
+    "uvicorn>=0.38.0",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.19.0",
+    "ruff>=0.14.7",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+extend-exclude = ["*.pyi", "alembic", "shared"]
+
+[tool.ruff.lint]
+extend-select = [
+    "E4",
+    "E7",
+    "E9",
+    "F",
+    "B",
+    "Q",
+    "FAST",
+    "ANN",
+    "ASYNC",
+    "S",
+    "BLE",
+    "FBT",
+    "A",
+    "COM",
+    "C4",
+    "DTZ",
+    "EM",
+    "ISC",
+    "LOG",
+    "INP",
+    "PIE",
+    "PYI",
+    "PT",
+    "RSE",
+    "RET",
+    "SLF",
+    "SIM",
+    "SLOT",
+    "TD",
+    "TC",
+    "ARG",
+    "PTH",
+    "FLY",
+    "I",
+    "N",
+    "PERF",
+    "E",
+    "W",
+    "F",
+    "PL",
+    "UP",
+    "FURB",
+    "RUF",
+    "TRY",
+]
+extend-ignore = ["RUF001", "RUF003", "PLR0913", "PLR0911"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]
+
+[tool.ruff.lint.flake8-type-checking]
+quote-annotations = true
+runtime-evaluated-base-classes = [
+	"pydantic.BaseModel",
+	"sqlalchemy.orm.DeclarativeBase",
+]
+
+[tool.ruff.lint.isort]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+combine-as-imports = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
+
+[tool.mypy]
+python_version = "3.13"
+plugins = ["pydantic.mypy"]
+disallow_untyped_defs = true
+disallow_untyped_decorators = true
+disallow_any_generics = true
+implicit_optional = false
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
+warn_no_return = true
+allow_redefinition = false
+local_partial_types = false
+strict_equality = true
+enable_error_code = [
+  "possibly-undefined",
+  "redundant-expr",
+  "truthy-bool",
+  "truthy-iterable",
+  "unused-awaitable",
+  "unused-ignore",
+  "unimported-reveal",
 ]
