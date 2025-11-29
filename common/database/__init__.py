@@ -1,3 +1,3 @@
-from . import adapters, mappers, models
+from . import adapters, connection, mappers, models
 
-__all__ = ["adapters", "mappers", "models"]
+__all__ = ["adapters", "connection", "mappers", "models"]

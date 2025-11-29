@@ -1,3 +1,3 @@
-from . import adapters, database, domain, message_queue
+from . import adapters, database, domain, message_queue, local_file_storage
 
-__all__ = ["adapters", "database", "domain", "message_queue"]
+__all__ = ["adapters", "database", "domain", "message_queue", "local_file_storage"]

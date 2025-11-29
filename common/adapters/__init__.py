@@ -1,3 +1,3 @@
-from . import events, storage
+from . import events, storage, file_storage
 
-__all__ = ["events", "storage"]
+__all__ = ["events", "storage", "file_storage"]
