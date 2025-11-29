@@ -1,12 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from enum import StrEnum
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from .text import Text
 
 
 class UploadStatus(StrEnum):
@@ -22,5 +18,3 @@ class Upload:
     status: UploadStatus
     filename: str
     has_validation: bool = False
-
-    texts: list[Text] | None = None

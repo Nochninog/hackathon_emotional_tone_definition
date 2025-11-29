@@ -1,10 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
 from dataclasses import dataclass
-
-if TYPE_CHECKING:
-    from .text import Text
 
 
 @dataclass
@@ -13,5 +9,3 @@ class Validation:
     text_id: int
 
     label: int
-
-    text: Text | None = None
