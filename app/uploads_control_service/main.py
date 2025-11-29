@@ -21,7 +21,7 @@ session_maker = create_session_maker(engine)
 
 unit_of_work_factory = SqlAlchemyUnitOfWorkFactory(session_maker=session_maker)
 file_storage = LocalFileStorage("./uploads")
-event_publisher = AioPikaEventPublisher(amqp_url="amqp://admin:admin123@localhost:5672/")
+event_publisher = AioPikaEventPublisher(amqp_url=environ.get("RABBITMQ_URL") or "")
 
 controller = UploadsController(
     file_storage=file_storage,
