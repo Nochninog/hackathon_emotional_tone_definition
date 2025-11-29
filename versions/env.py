@@ -15,11 +15,11 @@ config = context.config
 # Add database credits from env file
 section = config.config_ini_section
 config.set_section_option(section, "DB_USER", str(environ.get("DB_USER")))
-config.set_section_option(section, "DB_PORT", str(environ.get("DB_PORT")))
+config.set_section_option(section, "DB_PORT", str(environ.get("DB_MIGRATION_PORT")))
 config.set_section_option(section, "DB_ENGINE", str(environ.get("DB_MIGRATION_ENGINE")))
 config.set_section_option(section, "DB_PASSWORD", str(environ.get("DB_PASSWORD")))
 config.set_section_option(section, "DB_NAME", str(environ.get("DB_NAME")))
-config.set_section_option(section, "DB_HOST", str(environ.get("DB_ALEMBIC_HOST")))
+config.set_section_option(section, "DB_HOST", str(environ.get("DB_MIGRATION_HOST")))
 
 # add your model's MetaData object here
 # for 'autogenerate' support

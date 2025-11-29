@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 from contextlib import asynccontextmanager
-from os import environ
 from typing import TYPE_CHECKING
 
 from dotenv import load_dotenv
@@ -12,6 +13,7 @@ from common.message_queue.adapters import AioPikaEventPublisher
 from common.parser.adapters import PandasCsvUploadParser
 
 from .controller import UploadsController
+from .env import amqp_url, db_url
 
 if TYPE_CHECKING:
     from collections.abc import AsyncGenerator
@@ -19,13 +21,13 @@ if TYPE_CHECKING:
 load_dotenv()
 
 engine = create_engine(
-    db_url=environ.get("DB_URL") or "",
+    db_url=db_url,
 )
 session_maker = create_session_maker(engine)
 
 unit_of_work_factory = SqlAlchemyUnitOfWorkFactory(session_maker=session_maker)
 file_storage = LocalFileStorage("./uploads")
-event_publisher = AioPikaEventPublisher(amqp_url=environ.get("RABBITMQ_URL") or "")
+event_publisher = AioPikaEventPublisher(amqp_url=amqp_url)
 upload_parser = PandasCsvUploadParser()
 
 controller = UploadsController(
@@ -36,7 +38,7 @@ controller = UploadsController(
 )
 
 @asynccontextmanager
-async def lifespan(app: FastAPI) -> "AsyncGenerator[None]":
+async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
     yield
     await dispose_engine(engine)
 
