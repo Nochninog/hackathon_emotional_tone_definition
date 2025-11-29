@@ -16,11 +16,15 @@ async def create_upload_usecase(
     event_publisher: IEventPublisher,
     upload_file_bytes: bytes,
     upload_filename: str,
+    *,
+    has_validation: bool,
+    validation_file_bytes: bytes | None = None,
 ) -> Upload:
     upload_storage = uow.upload_storage
     upload = await upload_storage.create_upload(
         status=UploadStatus.PROCESSING,
         filename=upload_filename,
+        has_validation=has_validation,
     )
     await uow.commit()
 
@@ -28,6 +32,12 @@ async def create_upload_usecase(
         content=upload_file_bytes,
         upload_id=upload.upload_id,
     )
+
+    if has_validation and validation_file_bytes is not None:
+        await file_storage.save_validation_file(
+            content=validation_file_bytes,
+            upload_id=upload.upload_id,
+        )
 
     await event_publisher.publish_event(
         event_name="process_upload",
