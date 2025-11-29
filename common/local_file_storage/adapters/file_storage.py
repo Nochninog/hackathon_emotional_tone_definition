@@ -15,6 +15,9 @@ class LocalFileStorage(IFileStorage):
         if not sync_path.exists():
             raise FileNotFoundError
 
+        (sync_path / "uploads").mkdir(exist_ok=True)
+        (sync_path / "validations").mkdir(exist_ok=True)
+
     async def read_upload_file(self, upload_id: int) -> bytes:
         path_to_file = self.__make_upload_filepath(upload_id=upload_id)
         if not await path_to_file.exists():
@@ -31,7 +34,6 @@ class LocalFileStorage(IFileStorage):
 
     async def read_validation_file(self, upload_id: int) -> bytes:
         path_to_file = self.__make_validation_filepath(upload_id=upload_id)
-        print(path_to_file)
         if not await path_to_file.exists():
             raise FileNotFoundError
 
@@ -39,7 +41,6 @@ class LocalFileStorage(IFileStorage):
 
     async def save_validation_file(self, content: bytes, upload_id: int) -> None:
         path_to_file = self.__make_validation_filepath(upload_id=upload_id)
-        print(path_to_file)
         if await path_to_file.exists():
             raise FileExistsError
 
