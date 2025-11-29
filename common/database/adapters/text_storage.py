@@ -1,17 +1,22 @@
-from collections.abc import Iterable, Sequence
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from sqlalchemy import select, update
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from ...adapters.storage import ITextStorage
 from ...domain.models import Text, TextStatus
-
-from ..models import TextORM
 from ..mappers import text_orm_to_model, text_orms_to_models
+from ..models import TextORM
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable, Sequence
+
+    from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class SqlAlchemyTextStorage(ITextStorage):
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
     async def create_texts(

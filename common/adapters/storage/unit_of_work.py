@@ -1,7 +1,12 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from .text_storage import ITextStorage
-from .uploads_storage import IUploadStorage
-from .validation_storage import IValidationStorage
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .text_storage import ITextStorage
+    from .uploads_storage import IUploadStorage
+    from .validation_storage import IValidationStorage
 
 
 class IUnitOfWork(ABC):

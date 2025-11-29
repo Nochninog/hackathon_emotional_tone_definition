@@ -1,7 +1,12 @@
-from abc import ABC, abstractmethod
-from collections.abc import Iterable, Sequence
+from __future__ import annotations
 
-from ...domain.models import Validation
+from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable, Sequence
+
+    from ...domain.models import Validation
 
 
 class IValidationStorage(ABC):
@@ -19,7 +24,7 @@ class IValidationStorage(ABC):
         text_id: int,
     ) -> Validation:
         raise NotImplementedError
-    
+
     @abstractmethod
     async def get_validations_for_texts(
         self,

@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING
 
 from ...domain.models import Text, Upload, Validation
 
-from ..models import TextORM, UploadORM, ValidationORM
-
 if TYPE_CHECKING:
     from collections.abc import Iterable
+
+    from ..models import TextORM, UploadORM, ValidationORM
 
 
 def text_orm_to_model(
@@ -23,7 +23,7 @@ def text_orm_to_model(
 
 def text_orms_to_models(
     orms: Iterable[TextORM],
-) -> tuple[Text]:
+) -> tuple[Text, ...]:
     return tuple(text_orm_to_model(orm) for orm in orms)
 
 def upload_orm_to_model(
@@ -39,7 +39,7 @@ def upload_orm_to_model(
 
 def upload_orms_to_models(
     orms: Iterable[UploadORM],
-) -> tuple[Upload]:
+) -> tuple[Upload, ...]:
     return tuple(upload_orm_to_model(orm) for orm in orms)
 
 def validation_orm_to_model(
@@ -53,5 +53,5 @@ def validation_orm_to_model(
 
 def validation_orms_to_models(
     orms: Iterable[ValidationORM],
-) -> tuple[Validation]:
+) -> tuple[Validation, ...]:
     return tuple(validation_orm_to_model(orm) for orm in orms)

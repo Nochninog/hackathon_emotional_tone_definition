@@ -1,7 +1,12 @@
-from abc import ABC, abstractmethod
-from collections.abc import Sequence
+from __future__ import annotations
 
-from ...domain.models import Upload, UploadStatus
+from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from ...domain.models import Upload, UploadStatus
 
 
 class IUploadStorage(ABC):
@@ -10,6 +15,7 @@ class IUploadStorage(ABC):
         self,
         status: UploadStatus,
         filename: str,
+        *,
         has_validation: bool = False,
     ) -> Upload:
         raise NotImplementedError

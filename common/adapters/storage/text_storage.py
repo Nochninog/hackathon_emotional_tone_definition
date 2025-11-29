@@ -1,7 +1,12 @@
-from abc import ABC, abstractmethod
-from collections.abc import Iterable, Sequence
+from __future__ import annotations
 
-from ...domain.models import Text, TextStatus
+from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable, Sequence
+
+    from ...domain.models import Text, TextStatus
 
 
 class ITextStorage(ABC):

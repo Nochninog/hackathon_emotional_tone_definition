@@ -1,23 +1,30 @@
-from collections.abc import Sequence
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from sqlalchemy import select, update
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from ...adapters.storage import IUploadStorage
-from ...domain.models import Upload, UploadStatus
-
-from ..models import UploadORM
 from ..mappers import upload_orm_to_model, upload_orms_to_models
+from ..models import UploadORM
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from sqlalchemy.ext.asyncio import AsyncSession
+
+    from ...domain.models import Upload, UploadStatus
 
 
 class SqlAlchemyUploadStorage(IUploadStorage):
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
     async def create_upload(
         self,
         status: UploadStatus,
         filename: str,
+        *,
         has_validation: bool = False,
     ) -> Upload:
         upload = UploadORM(

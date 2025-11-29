@@ -1,6 +1,10 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any
-from collections.abc import Callable
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 class IEventConsumer(ABC):
@@ -11,7 +15,7 @@ class IEventConsumer(ABC):
         handler: Callable[[Any], Any],
     ) -> None:
         raise NotImplementedError
-    
+
     @abstractmethod
     async def start_consuming(
         self,

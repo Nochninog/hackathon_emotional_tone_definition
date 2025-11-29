@@ -1,11 +1,16 @@
+from __future__ import annotations
+
 import json
-from typing import Any
-from collections.abc import Callable
+from asyncio import iscoroutine
+from typing import TYPE_CHECKING, Any
 
 import aio_pika
 from aio_pika import IncomingMessage
 
 from ...adapters.events import IEventConsumer
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 class AioPikaEventConsumer(IEventConsumer):
@@ -26,7 +31,7 @@ class AioPikaEventConsumer(IEventConsumer):
         exchange_name: str = "events",
         routing_key_prefix: str = "",
         queue_name: str = "events.consumer",
-    ):
+    ) -> None:
         self.__amqp_url = amqp_url
         self.__exchange_name = exchange_name
         self.__prefix = routing_key_prefix
@@ -59,7 +64,7 @@ class AioPikaEventConsumer(IEventConsumer):
             durable=True,
         )
 
-        for event_name in self.__handlers.keys():
+        for event_name in self.__handlers:
             routing_key = self.__make_routing_key(event_name)
             await self.__queue.bind(self.__exchange, routing_key)
 
@@ -82,9 +87,9 @@ class AioPikaEventConsumer(IEventConsumer):
                 return
 
             payload = self.__decode_message_payload(message.body)
-
             result = handler(payload)
-            if hasattr(result, "__await__"):
+
+            if iscoroutine(result):
                 await result
 
     def __make_routing_key(self, event_name: str) -> str:

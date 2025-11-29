@@ -1,5 +1,5 @@
 from .consumer import IEventConsumer
-from .publisher import IEventPublisher
 from .models import StartUploadProcessingEvent
+from .publisher import IEventPublisher
 
 __all__ = ["IEventConsumer", "IEventPublisher", "StartUploadProcessingEvent"]

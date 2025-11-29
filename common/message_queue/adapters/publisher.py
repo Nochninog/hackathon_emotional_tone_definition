@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import json
 from typing import Any
 
 import aio_pika
-from aio_pika import Message, DeliveryMode
+from aio_pika import DeliveryMode, Message
 
 from ...adapters.events import IEventPublisher
 
@@ -21,7 +23,7 @@ class AioPikaEventPublisher(IEventPublisher):
         amqp_url: str,
         exchange_name: str = "events",
         routing_key_prefix: str = "",
-    ):
+    ) -> None:
         self.__amqp_url = amqp_url
         self.__exchange_name = exchange_name
         self.__prefix = routing_key_prefix
