@@ -1,5 +1,13 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from ...domain.models import Text, Upload, Validation
+
 from ..models import TextORM, UploadORM, ValidationORM
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 def text_orm_to_model(
@@ -11,10 +19,12 @@ def text_orm_to_model(
         status=orm.status,
         content=orm.content,
         predicted_label=orm.predicted_label,
-        upload=upload_orm_to_model(orm.upload) if orm.upload is not None else None,
-        validation=validation_orm_to_model(orm.validation) if orm.validation is not None else None,
     )
 
+def text_orms_to_models(
+    orms: Iterable[TextORM],
+) -> tuple[Text]:
+    return tuple(text_orm_to_model(orm) for orm in orms)
 
 def upload_orm_to_model(
     orm: UploadORM,
@@ -25,12 +35,12 @@ def upload_orm_to_model(
         status=orm.status,
         filename=orm.filename,
         has_validation=orm.has_validation,
-        texts=[
-            text_orm_to_model(text_orm)
-            for text_orm in orm.texts
-        ] if orm.texts is not None else None,
     )
 
+def upload_orms_to_models(
+    orms: Iterable[UploadORM],
+) -> tuple[Upload]:
+    return tuple(upload_orm_to_model(orm) for orm in orms)
 
 def validation_orm_to_model(
     orm: ValidationORM,
@@ -39,5 +49,9 @@ def validation_orm_to_model(
         validation_id=orm.validation_id,
         text_id=orm.text_id,
         label=orm.label,
-        text=text_orm_to_model(orm.text) if orm.text is not None else None,
     )
+
+def validation_orms_to_models(
+    orms: Iterable[ValidationORM],
+) -> tuple[Validation]:
+    return tuple(validation_orm_to_model(orm) for orm in orms)

@@ -11,7 +11,7 @@ class IUploadStorage(ABC):
         status: UploadStatus,
         filename: str,
         has_validation: bool = False,
-    ) -> Sequence[Upload]:
+    ) -> Upload:
         raise NotImplementedError
 
     @abstractmethod
@@ -24,7 +24,7 @@ class IUploadStorage(ABC):
     async def get_upload_by_id(
         self,
         upload_id: int,
-    ) -> Sequence[Upload]:
+    ) -> Upload:
         raise NotImplementedError
 
     @abstractmethod
