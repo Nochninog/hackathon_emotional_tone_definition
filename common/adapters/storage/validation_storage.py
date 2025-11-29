@@ -29,5 +29,5 @@ class IValidationStorage(ABC):
     async def get_validations_for_texts(
         self,
         text_ids: int,
-    ) -> Validation:
+    ) -> Sequence[Validation]:
         raise NotImplementedError
