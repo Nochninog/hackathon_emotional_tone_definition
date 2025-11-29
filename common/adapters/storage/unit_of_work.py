@@ -1,12 +1,22 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from collections.abc import AsyncGenerator
+
     from .text_storage import ITextStorage
     from .uploads_storage import IUploadStorage
     from .validation_storage import IValidationStorage
+
+
+class IUnitOfWorkFactory[UnitOfWork: IUnitOfWork](ABC):
+    @asynccontextmanager
+    @abstractmethod
+    def with_unit_of_work(self) -> AsyncGenerator[UnitOfWork]:
+        raise NotImplementedError
 
 
 class IUnitOfWork(ABC):
