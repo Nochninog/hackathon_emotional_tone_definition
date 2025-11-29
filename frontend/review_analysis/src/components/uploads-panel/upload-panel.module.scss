@@ -1,0 +1,18 @@
+.uploads-panel{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.file-info-header{
+    display: flex;
+    
+}
+
+.file-info-title{
+    font-weight: 800;
+    font-size: 13px;
+    width: 20%;
+    text-align: center;
+}
+

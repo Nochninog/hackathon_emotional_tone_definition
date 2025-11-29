@@ -1,0 +1,41 @@
+.file-area{
+    background-color: #E6E9ED;
+    display: flex;
+    width: 300px;
+    height: 270px;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+.file-input {
+    display: none;
+}
+
+.file-area-img{
+    position: absolute;
+    z-index: 0;
+}
+
+h3{
+    font-size: 24px;
+    text-align: center;
+    color: rgb(42, 41, 41);
+}
+
+.file-name-container{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-weight: 500;
+    font-size: 18px;
+    position: relative;
+}
+
+.file-name-button{
+    border: 0;
+    background: none;
+}

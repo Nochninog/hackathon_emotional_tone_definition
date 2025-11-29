@@ -1,27 +1,20 @@
-import { useState } from 'react'
-import styles from "./assets/App.module.scss";
-import './assets/global.scss'
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import ReviewAnalysis from "./pages/ReviewsAnalysis";
 
 function App() {
   return (
-    <>
-      <main>
-        <div className={styles['header-container']}>
-          <h1>АНАЛИЗАТОР ТОНАЛЬНОСТИ ОТЗЫВОВ</h1>
-        </div>
-        <div className={styles['upload-status-container']}>
-          <div className={styles['upload-container']}>
-              <input type="Введите название файла" />
-              <button>Загрузить данные</button>
-          </div>
-          <div className={styles['status-panel-container']}>
+     <BrowserRouter>
+      {/* <nav style={{ display: "flex", gap: "20px", margin: "20px" }}>
+        <Link to="/">Главная</Link>
+        <Link to="/analyzer">Анализатор</Link>
+      </nav> */}
 
-          </div>
-        </div>
-        
-      </main>
-     
-    </>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/reviews-analysis" element={<ReviewAnalysis />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

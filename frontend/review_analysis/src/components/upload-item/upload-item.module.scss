@@ -1,0 +1,21 @@
+.upload-item{
+    background-color: white;
+    padding: 30px 20px;
+    border-radius: 10px;
+    display: flex;
+
+    .upload-item-column{
+        width: 20%;
+        display: flex;
+        justify-content: left;
+        padding-left: 80px;
+
+
+        .link{
+            padding: 0;
+            text-decoration: none;
+            display: flex;
+        }
+    }
+}
+
