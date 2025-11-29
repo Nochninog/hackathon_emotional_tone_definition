@@ -13,7 +13,9 @@ dependencies = [
     "psycopg2>=2.9.11",
     "pydantic>=2.12.5",
     "python-dotenv>=1.2.1",
+    "python-multipart>=0.0.20",
     "sqlalchemy>=2.0.44",
+    "uvicorn>=0.38.0",
 ]
 
 [dependency-groups]
