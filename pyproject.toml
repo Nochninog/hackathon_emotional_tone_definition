@@ -13,3 +13,9 @@ dependencies = [
     "python-dotenv>=1.2.1",
     "sqlalchemy>=2.0.44",
 ]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.19.0",
+    "ruff>=0.14.7",
+]
