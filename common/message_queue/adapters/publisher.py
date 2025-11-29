@@ -14,9 +14,9 @@ class AioPikaEventPublisher(IEventPublisher):
     __exchange_name: str
     __prefix: str
 
-    __connection: aio_pika.RobustConnection | None = None
-    __channel: aio_pika.Channel | None = None
-    __exchange: aio_pika.Exchange | None = None
+    __connection: aio_pika.abc.AbstractRobustConnection | None = None
+    __channel: aio_pika.abc.AbstractChannel | None = None
+    __exchange: aio_pika.abc.AbstractExchange | None = None
 
     def __init__(
         self,
@@ -45,6 +45,12 @@ class AioPikaEventPublisher(IEventPublisher):
         if self.__connection:
             await self.__connection.close()
 
+    @property
+    def _exchange(self) -> aio_pika.abc.AbstractExchange:
+        if self.__exchange is None:
+            raise Exception("Does not have exchange")
+        return self.__exchange
+
     async def publish_event(
         self,
         event_name: str,
@@ -61,7 +67,7 @@ class AioPikaEventPublisher(IEventPublisher):
             content_type="application/json",
         )
 
-        await self.__exchange.publish(
+        await self._exchange.publish(
             message=message,
             routing_key=routing_key,
         )

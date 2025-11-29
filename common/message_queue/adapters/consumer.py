@@ -18,10 +18,10 @@ class AioPikaEventConsumer(IEventConsumer):
     __exchange_name: str
     __prefix: str
 
-    __connection: aio_pika.RobustConnection | None = None
-    __channel: aio_pika.Channel | None = None
-    __exchange: aio_pika.Exchange | None = None
-    __queue: aio_pika.Queue | None = None
+    __connection: aio_pika.abc.AbstractRobustConnection | None = None
+    __channel: aio_pika.abc.AbstractChannel | None = None
+    __exchange: aio_pika.abc.AbstractExchange | None = None
+    __queue: aio_pika.abc.AbstractQueue | None = None
 
     __handlers: dict[str, Callable[[Any], Any]]
 
@@ -72,12 +72,18 @@ class AioPikaEventConsumer(IEventConsumer):
         if self.__connection:
             await self.__connection.close()
 
+    @property
+    def _queue(self) -> aio_pika.abc.AbstractQueue:
+        if self.__queue is None:
+            raise Exception("Does not have queue")
+        return self.__queue
+
     async def start_consuming(self) -> None:
         await self.connect()
 
-        await self.__queue.consume(self.__on_message)
+        await self._queue.consume(self.__on_message)
 
-    async def __on_message(self, message: IncomingMessage) -> None:
+    async def __on_message(self, message: aio_pika.abc.AbstractIncomingMessage) -> None:
         async with message.process():
             routing_key = message.routing_key
             event_name = self.__extract_event_name(routing_key)
