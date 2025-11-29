@@ -27,10 +27,11 @@ class LocalFileStorage(IFileStorage):
         if await path_to_file.exists():
             raise FileExistsError
 
-        path_to_file.write_bytes(content)
+        await path_to_file.write_bytes(content)
 
     async def read_validation_file(self, upload_id: int) -> bytes:
         path_to_file = self.__make_validation_filepath(upload_id=upload_id)
+        print(path_to_file)
         if not await path_to_file.exists():
             raise FileNotFoundError
 
@@ -38,10 +39,11 @@ class LocalFileStorage(IFileStorage):
 
     async def save_validation_file(self, content: bytes, upload_id: int) -> None:
         path_to_file = self.__make_validation_filepath(upload_id=upload_id)
+        print(path_to_file)
         if await path_to_file.exists():
             raise FileExistsError
 
-        path_to_file.write_bytes(content)
+        await path_to_file.write_bytes(content)
 
     def __make_upload_filepath(self, upload_id: int) -> AsyncPath:
         return self.__async_path / "uploads" / f"upload_{upload_id}.csv"
