@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-import logging
 
-from sqlalchemy import select, update, func, and_
+from sqlalchemy import and_, func, select, update
 
 from ...adapters.storage import ITextStorage
 from ...domain.models import Text, TextStatus
@@ -11,7 +10,7 @@ from ..mappers import text_orm_to_model, text_orms_to_models
 from ..models import TextORM
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Sequence, Mapping
+    from collections.abc import Iterable, Mapping, Sequence
 
     from sqlalchemy.ext.asyncio import AsyncSession
 
