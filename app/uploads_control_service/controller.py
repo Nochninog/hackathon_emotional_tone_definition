@@ -6,8 +6,15 @@ from typing import TYPE_CHECKING, Annotated
 from fastapi import Body, File, HTTPException, Path, Query, UploadFile, status
 
 from common.api.controller import BaseController
-from common.api.schemas import SUpload
-from common.usecases import create_upload_usecase, list_uploads_usecase, retrieve_upload_usecase
+from common.api.schemas import SToneDistribution, SUpload, SUploadProcessingProgress
+from common.usecases import (
+    create_upload_usecase,
+    get_tone_distribution_usecase,
+    get_upload_processing_progress_usecase,
+    get_upload_sources_usecase,
+    list_uploads_usecase,
+    retrieve_upload_usecase,
+)
 
 if TYPE_CHECKING:
     from common.adapters.events import IEventPublisher
@@ -92,3 +99,45 @@ class UploadsController(BaseController):
                     ) from e
 
                 return SUpload.model_validate(asdict(upload))
+
+        @self._router.get(
+            path="/uploads/{upload_id}/progress/",
+            response_model=SUploadProcessingProgress,
+        )
+        async def get_upload_processing_progress(
+            upload_id: Annotated[int, Path()],
+        ) -> SUploadProcessingProgress:
+            async with self.__unit_of_work_factory.with_unit_of_work() as uow:
+                model = await get_upload_processing_progress_usecase(
+                    uow=uow,
+                    upload_id=upload_id,
+                )
+                return SUploadProcessingProgress.model_validate(asdict(model))
+
+        @self._router.get(
+            path="/uploads/{upload_id}/tones/",
+            response_model=SToneDistribution,
+        )
+        async def get_tone_distribution(
+            upload_id: Annotated[int, Path()],
+        ) -> SToneDistribution:
+            async with self.__unit_of_work_factory.with_unit_of_work() as uow:
+                model = await get_tone_distribution_usecase(
+                    uow=uow,
+                    upload_id=upload_id,
+                )
+                return SToneDistribution.model_validate(asdict(model))
+
+        @self._router.get(
+            path="/uploads/{upload_id}/sources/",
+            response_model=list[str],
+        )
+        async def get_upload_sources(
+            upload_id: Annotated[int, Path()],
+        ) -> list[str]:
+            async with self.__unit_of_work_factory.with_unit_of_work() as uow:
+                sources = await get_upload_sources_usecase(
+                    uow=uow,
+                    upload_id=upload_id,
+                )
+                return list(sources)

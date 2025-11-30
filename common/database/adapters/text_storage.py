@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+import logging
 
-from sqlalchemy import select, update, func
+from sqlalchemy import select, update, func, and_
 
 from ...adapters.storage import ITextStorage
 from ...domain.models import Text, TextStatus
@@ -10,7 +11,7 @@ from ..mappers import text_orm_to_model, text_orms_to_models
 from ..models import TextORM
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Sequence
+    from collections.abc import Iterable, Sequence, Mapping
 
     from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -60,6 +61,47 @@ class SqlAlchemyTextStorage(ITextStorage):
     ) -> int:
         query = select(func.count()).select_from(
             select(TextORM).where(TextORM.upload_id == upload_id),
+        )
+        return await self._session.scalar(query)
+
+    async def get_text_sources_by_upload_id(
+        self,
+        upload_id: int,
+    ) -> Sequence[str]:
+        query = (
+            select(TextORM.src)
+            .where(TextORM.upload_id == upload_id)
+            .group_by(TextORM.src)
+        )
+        return await self._session.scalars(query)
+
+    async def get_predicted_labels_distribution_by_upload_id(
+        self,
+        upload_id: int,
+    ) -> Mapping[int, int]:
+        query = (
+            select(
+                TextORM.predicted_label,
+                func.count().label("count"),
+            )
+            .where(TextORM.upload_id == upload_id)
+            .group_by(TextORM.predicted_label)
+        )
+        rows = await self._session.execute(query)
+        distribution = {}
+        for (label, count) in rows.all():
+            distribution[label] = count
+        return distribution
+
+    async def count_processed_texts_by_upload_id(
+        self,
+        upload_id: int,
+    ) -> int:
+        query = select(func.count()).select_from(
+            select(TextORM).where(and_(
+                TextORM.upload_id == upload_id,
+                TextORM.predicted_label >= 0,
+            )),
         )
         return await self._session.scalar(query)
 

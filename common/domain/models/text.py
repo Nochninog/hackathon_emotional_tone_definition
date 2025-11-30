@@ -20,3 +20,10 @@ class Text:
     content: str
     predicted_label: int | None = None
     src: str | None = None
+
+
+@dataclass
+class ToneDistribution:
+    positive: int
+    negative: int
+    neutral: int

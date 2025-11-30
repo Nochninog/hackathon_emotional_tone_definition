@@ -21,3 +21,9 @@ class Upload:
     status: UploadStatus
     filename: str
     has_validation: bool = False
+
+
+@dataclass
+class UploadProcessingProgress:
+    total_texts: int
+    processed_texts: int
