@@ -42,7 +42,7 @@ def upgrade() -> None:
     sa.Column("upload_id", sa.Integer(), nullable=False),
     sa.Column("status", text_status, nullable=False),
     sa.Column("content", sa.String(), nullable=False),
-    sa.Column("predicted_label", sa.String(), nullable=True),
+    sa.Column("predicted_label", sa.Integer(), nullable=True),
     sa.Column("src", sa.String(), nullable=True),
     sa.ForeignKeyConstraint(["upload_id"], ["uploads.upload_id"] ),
     sa.PrimaryKeyConstraint("text_id"),

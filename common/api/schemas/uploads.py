@@ -15,3 +15,8 @@ class SUpload(BaseModel):
 
 class SUploadCreate(BaseModel):
     has_validation: bool
+
+
+class SUploadProcessingProgress(BaseModel):
+    total_texts: int
+    processed_texts: int

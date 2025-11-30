@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Sequence
+    from collections.abc import Iterable, Mapping, Sequence
 
     from ...domain.models import Text, TextStatus
 
@@ -23,7 +23,16 @@ class ITextStorage(ABC):
     async def get_texts_by_upload_id(
         self,
         upload_id: int,
+        limit: int = -1,
+        offset: int = 0,
     ) -> Sequence[Text]:
+        raise NotImplementedError
+
+    @abstractmethod
+    async def count_texts_by_upload_id(
+        self,
+        upload_id: int,
+    ) -> int:
         raise NotImplementedError
 
     @abstractmethod
@@ -46,6 +55,27 @@ class ITextStorage(ABC):
         src: str,
         upload_id: int,
     ) -> Sequence[Text]:
+        raise NotImplementedError
+
+    @abstractmethod
+    async def get_text_sources_by_upload_id(
+        self,
+        upload_id: int,
+    ) -> Sequence[str]:
+        raise NotImplementedError
+
+    @abstractmethod
+    async def get_predicted_labels_distribution_by_upload_id(
+        self,
+        upload_id: int,
+    ) -> Mapping[int, int]:
+        raise NotImplementedError
+
+    @abstractmethod
+    async def count_processed_texts_by_upload_id(
+        self,
+        upload_id: int,
+    ) -> int:
         raise NotImplementedError
 
     @abstractmethod

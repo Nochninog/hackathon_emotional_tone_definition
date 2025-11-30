@@ -21,7 +21,7 @@ class TextORM(Base):
 
     status: Mapped[TextStatus] = mapped_column(Enum(TextStatus), nullable=False)
     content: Mapped[str] = mapped_column(String, nullable=False)
-    predicted_label: Mapped[int | None] = mapped_column(String, nullable=True)
+    predicted_label: Mapped[int | None] = mapped_column(Integer, nullable=True)
     src: Mapped[str | None] = mapped_column(String, nullable=True)
 
     upload: Mapped["UploadORM"] = relationship(back_populates="texts")  # noqa: UP037

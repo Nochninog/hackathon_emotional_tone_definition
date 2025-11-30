@@ -13,3 +13,9 @@ class SText(BaseModel):
     content: str
     predicted_label: int | None = Field(default=None)
     src: str | None = Field(default=None)
+
+
+class SToneDistribution(BaseModel):
+    positive: int
+    negative: int
+    neutral: int

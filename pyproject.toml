@@ -13,17 +13,30 @@ dependencies = [
     "pandas>=2.3.3",
     "psycopg2>=2.9.11 ; sys_platform == 'win32'",
     "psycopg2-binary>=2.9.10 ; sys_platform == 'darwin' or sys_platform == 'linux'",
+    "pandas>=2.3.3",
     "pydantic>=2.12.5",
     "python-dotenv>=1.2.1",
     "python-multipart>=0.0.20",
     "sqlalchemy>=2.0.44",
     "uvicorn>=0.38.0",
+    "tqdm>=4.67.1",
 ]
+
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
 
 [dependency-groups]
 dev = [
     "mypy>=1.19.0",
     "ruff>=0.14.7",
+]
+ml = [
+    "scikit-learn>=1.7.2",
+    "torch>=2.9.1",
+    "transformers[torch]>=4.57.3",
 ]
 
 [tool.ruff]
@@ -123,4 +136,6 @@ enable_error_code = [
   "unused-awaitable",
   "unused-ignore",
   "unimported-reveal",
+    "torch>=2.9.1",
+    "transformers>=4.57.3",
 ]
