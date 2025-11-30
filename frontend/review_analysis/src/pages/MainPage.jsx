@@ -1,9 +1,9 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect, useRef} from "react";
 import styles from "../assets/MainPage.module.scss";
 import '../assets/global.scss'
 import Button from "../components/button/Button";
 import UploadModal from "../components/upload-modal/UploadModal";
-import Input from "../components/input/input";
+import Input from "../components/input/Input";
 import UploadsPanel from "../components/uploads-panel/UploadsPanel";
 import UploadService from "../API/UploadService";
 
@@ -13,18 +13,26 @@ export default function MainPage() {
   const [search, setSearch] = useState("");
 
   const [uploads, setUploads] = useState([])
-      async function loadUploads() {
-              try {
-                  const data = await UploadService.get_all_files(search);
-                  setUploads(data); 
-              } catch (error) {
-                  console.error("Ошибка при загрузке файлов:", error);
-              }
+  async function loadUploads() {
+          try {
+              const data = await UploadService.get_all_files(search);
+              setUploads(data); 
+          } catch (error) {
+              console.error("Ошибка при загрузке файлов:", error);
           }
-  
-      useEffect(() => {
-          loadUploads();
-      }, [isModalActive, search]);
+      }
+
+  useEffect(() => {
+      loadUploads();
+  }, [isModalActive, search]);
+
+  const intervalRef = useRef();
+  useEffect(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    intervalRef.current = setInterval(() => loadUploads(), 1000);
+  }, []);
 
   return (
     <main>

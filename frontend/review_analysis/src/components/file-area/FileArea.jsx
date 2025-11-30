@@ -37,12 +37,12 @@ function FileArea({children, onFileSelect}){
     return(
         fileName ? 
         <div className={styles['file-area']}>
-            <img className={styles['file-area-img']} src="../../public/input_file.svg" alt="" />
+            <img className={styles['file-area-img']} src="input_file.svg" alt="" />
             
                 <div className={styles['file-name-container']}>
                     {truncateFileName(fileName)}
                     <button className={styles['file-name-button']} onClick={handleButtonClick}>
-                        <img src="../../public/close.svg" height={20} alt="" />
+                        <img src="close.svg" height={20} alt="" />
                     </button>
                 </div>
         
@@ -58,7 +58,7 @@ function FileArea({children, onFileSelect}){
         </div>
         :
         <label className={styles['file-area']}>
-            <img className={styles['file-area-img']} src="../../public/input_file.svg" alt="" />
+            <img className={styles['file-area-img']} src="input_file.svg" alt="" />
             
                 <h3>{children}</h3>
         

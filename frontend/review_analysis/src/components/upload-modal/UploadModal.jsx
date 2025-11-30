@@ -29,7 +29,7 @@ function UploadModal({setIsModalActive}){
                 <div className={styles['modal-header']}>
                     <h2> Загрузите данные для анализа</h2>
                     <button className={styles['button-close']} onClick={() => setIsModalActive(false)}>
-                        <img src="../../public/close.svg" alt="" />
+                        <img src="close.svg" alt="" />
                     </button>
                 </div>
 

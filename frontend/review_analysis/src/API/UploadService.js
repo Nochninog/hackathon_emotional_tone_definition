@@ -50,14 +50,50 @@ export default class UploadService{
     
 
     static async get_file_by_id(id) {
-    const url = new URL(`${API_URL}/uploads/${id}`);
+        const url = new URL(`${API_URL}/uploads/${id}/`);
 
-    const res = await fetch(url, {
-        method: "GET"
-    });
+        const res = await fetch(url, {
+            method: "GET"
+        });
 
-    const data = await res.json();
-    return applyDateFormatting(data);
-}
+        const data = await res.json();
+        return applyDateFormatting([data]);
+    }
+
+    static async get_tones(id) {
+        const url = new URL(`${API_URL}/uploads/${id}/tones/`);
+
+        const res = await fetch(url, {
+            method: "GET"
+        });
+
+        const data = await res.json();
+        console.log(data);
+        return data;
+    }
+
+    static async get_sources(id) {
+        const url = new URL(`${API_URL}/uploads/${id}/sources/`);
+
+        const res = await fetch(url, {
+            method: "GET"
+        });
+
+        const data = await res.json();
+        return data;
+
+        с
+    }
+
+    static async get_progress(id) {
+        const url = new URL(`${API_URL}/uploads/${id}/progress/`);
+
+        const res = await fetch(url, {
+            method: "GET"
+        });
+
+        const data = await res.json();
+        return data;
+    }
 
 }

@@ -17,7 +17,7 @@ function UploadItem({name, uploaded_at, status, upload_id}){
             <div className={styles['upload-item-column']}>
                 <div className={styles['file-column']}>
                     <MutedText>
-                        <img src="../../public/file.svg" alt="" />{name}
+                        <img src="file.svg" alt="" />{name}
                     </MutedText>
                 </div>
             </div>
@@ -40,7 +40,7 @@ function UploadItem({name, uploaded_at, status, upload_id}){
                 <div className={styles['link-column']}>
                     <Link className={styles['link']} to={`/reviews-analysis/${upload_id}`}>
                     <MutedText>
-                        <img src="../../public/eye.svg" alt="" />
+                        <img src="eye.svg" alt="" />
                         Посмотреть
                     </MutedText>
                 </Link>
