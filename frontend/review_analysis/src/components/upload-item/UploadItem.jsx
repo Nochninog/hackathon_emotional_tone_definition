@@ -5,33 +5,52 @@ import Badge from '../badge/Badge';
 
 
 function UploadItem({name, uploaded_at, file_statistics, status, upload_id}){
+    const truncateFileName = (name, maxLength = 20) => {
+        if (name.length <= maxLength) 
+            return name;
+        return name.substring(0, maxLength) + '...';
+    };
+
+
     return(
         <div className={styles['upload-item']}>
             <div className={styles['upload-item-column']}>
-                <MutedText>
-                    <img src="../../public/file.svg" alt="" />{name}
-                </MutedText>
+                <div className={styles['file-column']}>
+                    <MutedText>
+                        <img src="../../public/file.svg" alt="" />{truncateFileName(name)}
+                    </MutedText>
+                </div>
             </div>
             <div className={styles['upload-item-column']}>
-                <MutedText>
-                    {uploaded_at}
-                </MutedText>
+                <div className={styles['uploaded-at-column']}>
+                    <MutedText>
+                        {uploaded_at}
+                    </MutedText>
+                </div>
             </div>
             <div className={styles['upload-item-column']}>
-                <MutedText>
+                <div className={styles['file-statistics-column']}>
+                    <MutedText>
                 {file_statistics}
                 </MutedText>
+                </div>
             </div>
             <div className={styles['upload-item-column']}>
-                {status}
+                <div className={styles['status-column']}>
+                    <Badge 
+                    status={status}
+                ></Badge>
+                </div>
             </div>
             <div className={styles['upload-item-column']}>
-                <Link className={styles['link']} to="/reviews-analysis">
+                <div className={styles['link-column']}>
+                    <Link className={styles['link']} to={`/reviews-analysis/${upload_id}`}>
                     <MutedText>
                         <img src="../../public/eye.svg" alt="" />
-                        {upload_id}
+                        Посмотреть
                     </MutedText>
                 </Link>
+                </div>
             </div>    
         </div>
     );

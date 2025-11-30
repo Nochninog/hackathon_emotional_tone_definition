@@ -8,9 +8,9 @@
         width: 20%;
         display: flex;
         justify-content: left;
-        padding-left: 80px;
-
-
+        padding-left: 0;
+        align-items: center;
+        
         .link{
             padding: 0;
             text-decoration: none;
@@ -19,3 +19,22 @@
     }
 }
 
+.file-column{
+    padding-left: 90px;
+}
+
+.uploaded-at-column{
+    padding-left: 100px;
+}
+
+.file-statistics-column{
+    padding-left: 100px;
+}
+
+.status-column{
+    padding-left: 140px;
+}
+
+.link-column{
+    padding-left: 140px;
+}

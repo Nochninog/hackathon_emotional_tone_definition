@@ -1,8 +1,8 @@
 import styles from './input.module.scss'
 
-function Input(){
+function Input({onChange}){
     return(
-         <input type="text" placeholder="Введите название файла" />
+         <input type="text" placeholder="Введите название файла" onChange={onChange}/>
     )
 }
 

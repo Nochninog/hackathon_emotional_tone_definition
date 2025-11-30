@@ -8,20 +8,18 @@ import UploadService from '../../API/UploadService';
 
 function UploadModal({setIsModalActive}){
     const [dataFile, setDataFile] = useState(null);
-    const [isValidation, setIsValidation] = useState(false);
+    const [hasValidation, setHasValidation] = useState(false);
 
 
 
     const handleUpload = async () => {
         const formData = new FormData();
         if (dataFile) 
-            formData.append("data", dataFile);
+            formData.append("upload_file", dataFile);
         
-        formData.append("is_validation", isValidatio)
+        formData.append("has_validation", hasValidation)
        
-
-        const result = await UploadService.create_upload()
-        console.log(result);
+        const result = await UploadService.create_upload(formData)
     };
 
 
@@ -38,7 +36,7 @@ function UploadModal({setIsModalActive}){
                 <div className={styles['file-area-container']}>
                     <FileArea onFileSelect={setDataFile}>Загрузить данные</FileArea>
                     <label className={styles['checkbox-label']}>
-                        <input type="checkbox" onChange={() => setIsValidation(true)}/>
+                        <input type="checkbox" onChange={() => setHasValidation(true)}/>
                         Данные содержат валидацию
                     </label>
                     <Button onClick={() =>{handleUpload(); setIsModalActive(false); }}>Загрузить</Button>

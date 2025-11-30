@@ -18,6 +18,10 @@ from .env import amqp_url, db_url
 if TYPE_CHECKING:
     from collections.abc import AsyncGenerator
 
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
 load_dotenv()
 
 engine = create_engine(
@@ -47,3 +51,13 @@ app = FastAPI(
     lifespan=lifespan,
 )
 app.include_router(controller.router)
+
+
+# Configure CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,  # Allows cookies to be included in cross-origin requests
+    allow_methods=["*"],  # Allows all HTTP methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
