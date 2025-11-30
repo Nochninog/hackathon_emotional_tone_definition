@@ -47,7 +47,8 @@ function FileArea({children, onFileSelect}){
                 </div>
         
             <input 
-                type="file" 
+                type="file"
+                accept="text/csv"
                 className={styles['file-input']}
                 onChange={handleFileChange}
                 ref={fileInputRef}
@@ -63,6 +64,7 @@ function FileArea({children, onFileSelect}){
         
             <input 
                 type="file" 
+                accept="text/csv"
                 className={styles['file-input']}
                 onChange={handleFileChange}
                 ref={fileInputRef}
