@@ -1,5 +1,5 @@
 import styles from "../assets/ReviewsAnalysis.module.scss";
-import { useParams} from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 import UploadService from "../API/UploadService";
 import { useState, useEffect } from "react";
 import Badge from "../components/badge/Badge";
@@ -35,7 +35,7 @@ function ReviewAnalysis(){
     return(
         <main>
             <div className={styles['header-container']}>
-                <h1>АНАЛИЗАТОР ТОНАЛЬНОСТИ ОТЗЫВОВ</h1>
+                <Link to="/"><h1>АНАЛИЗАТОР ТОНАЛЬНОСТИ ОТЗЫВОВ</h1></Link>
             </div>
             <div className={styles['chart-info-container']}>
                 <div className={styles['info-container']}>

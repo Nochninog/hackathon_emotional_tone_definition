@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+import asyncio
 import json
 from asyncio import iscoroutine
 from typing import TYPE_CHECKING, Any
 
 import aio_pika
-from aio_pika import IncomingMessage
 
 from ...adapters.events import IEventConsumer
 
@@ -25,6 +25,8 @@ class AioPikaEventConsumer(IEventConsumer):
 
     __handlers: dict[str, Callable[[Any], Any]]
 
+    __retry_delay: int
+
     def __init__(
         self,
         amqp_url: str,
@@ -38,6 +40,7 @@ class AioPikaEventConsumer(IEventConsumer):
         self.__queue_name = queue_name
 
         self.__handlers = {}
+        self.__retry_delay = 5
 
     def register_event(
         self,
@@ -47,26 +50,33 @@ class AioPikaEventConsumer(IEventConsumer):
         self.__handlers[event_name] = handler
 
     async def connect(self) -> None:
-        if self.__connection and not self.__connection.is_closed:
-            return
+        while True:
+            try:
+                if self.__connection and not self.__connection.is_closed:
+                    return
 
-        self.__connection = await aio_pika.connect_robust(self.__amqp_url)
-        self.__channel = await self.__connection.channel()
+                self.__connection = await aio_pika.connect_robust(self.__amqp_url)
+                self.__channel = await self.__connection.channel()
 
-        self.__exchange = await self.__channel.declare_exchange(
-            self.__exchange_name,
-            type=aio_pika.ExchangeType.TOPIC,
-            durable=True,
-        )
+                self.__exchange = await self.__channel.declare_exchange(
+                    self.__exchange_name,
+                    type=aio_pika.ExchangeType.TOPIC,
+                    durable=True,
+                )
 
-        self.__queue = await self.__channel.declare_queue(
-            self.__queue_name,
-            durable=True,
-        )
+                self.__queue = await self.__channel.declare_queue(
+                    self.__queue_name,
+                    durable=True,
+                )
 
-        for event_name in self.__handlers:
-            routing_key = self.__make_routing_key(event_name)
-            await self.__queue.bind(self.__exchange, routing_key)
+                for event_name in self.__handlers:
+                    routing_key = self.__make_routing_key(event_name)
+                    await self.__queue.bind(self.__exchange, routing_key)
+
+                return
+
+            except Exception as exc:
+                await asyncio.sleep(self.__retry_delay)
 
     async def close(self) -> None:
         if self.__connection:

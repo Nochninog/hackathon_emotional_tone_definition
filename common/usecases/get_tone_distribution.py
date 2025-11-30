@@ -19,7 +19,7 @@ async def get_tone_distribution_usecase(
     )
 
     return ToneDistribution(
-        positive=labels_distribution[1],
-        negative=labels_distribution[2],
-        neutral=labels_distribution[0],
+        positive=labels_distribution.get(1, 0),
+        negative=labels_distribution.get(2, 0),
+        neutral=labels_distribution.get(0, 0),
     )

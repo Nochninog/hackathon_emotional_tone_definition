@@ -19,8 +19,6 @@ if TYPE_CHECKING:
 
 from fastapi.middleware.cors import CORSMiddleware
 
-
-
 load_dotenv()
 
 engine = create_engine(
@@ -49,8 +47,6 @@ app = FastAPI(
 )
 app.include_router(controller.router)
 
-
-# Configure CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Allows all origins

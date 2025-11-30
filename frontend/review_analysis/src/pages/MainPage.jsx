@@ -37,7 +37,7 @@ export default function MainPage() {
   return (
     <main>
       <div className={styles['header-container']}>
-        <h1>АНАЛИЗАТОР ТОНАЛЬНОСТИ ОТЗЫВОВ</h1>
+        <Link to="/"><h1>АНАЛИЗАТОР ТОНАЛЬНОСТИ ОТЗЫВОВ</h1></Link>
       </div>
 
       <div className={styles['upload-status-container']}>
