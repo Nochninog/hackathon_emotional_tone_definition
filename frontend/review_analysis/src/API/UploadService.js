@@ -46,4 +46,18 @@ export default class UploadService{
         const data = await res.json();
         return applyDateFormatting(data);
     }
+
+    
+
+    static async get_file_by_id(id) {
+    const url = new URL(`${API_URL}/uploads/${id}`);
+
+    const res = await fetch(url, {
+        method: "GET"
+    });
+
+    const data = await res.json();
+    return applyDateFormatting(data);
+}
+
 }

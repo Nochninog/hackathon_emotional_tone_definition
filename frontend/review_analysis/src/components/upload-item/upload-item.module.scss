@@ -1,11 +1,11 @@
 .upload-item{
     background-color: white;
-    padding: 30px 20px;
+    padding: 30px 30px;
     border-radius: 10px;
     display: flex;
 
     .upload-item-column{
-        width: 20%;
+        width: 25%;
         display: flex;
         justify-content: left;
         padding-left: 0;
@@ -17,24 +17,4 @@
             display: flex;
         }
     }
-}
-
-.file-column{
-    padding-left: 90px;
-}
-
-.uploaded-at-column{
-    padding-left: 100px;
-}
-
-.file-statistics-column{
-    padding-left: 100px;
-}
-
-.status-column{
-    padding-left: 140px;
-}
-
-.link-column{
-    padding-left: 140px;
 }

@@ -1,12 +1,13 @@
 import styles from './badge.module.scss'
 
-function Badge({status}){
+function Badge({status, big=false}){
     const data_badge = {"processing": ["В работе", "#542DFF",  "#542DFF"], "done": ["Готово","#41CA02", "#39B202"], "error":["Ошибка", "#D32044", "#E12A43"]}
 
     const [text, bgColorHex, textColor] = data_badge[status];
     return(
         <div 
-        className={styles['badge']} 
+        className={styles['badge'] + " " + (big ? styles['big'] : "")} 
+
         style={{
             backgroundColor: hexToRgba(bgColorHex, 0.33),
             color: textColor

@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import Badge from '../badge/Badge';
 
 
-function UploadItem({name, uploaded_at, file_statistics, status, upload_id}){
+function UploadItem({name, uploaded_at, status, upload_id}){
     const truncateFileName = (name, maxLength = 20) => {
         if (name.length <= maxLength) 
             return name;
@@ -17,7 +17,7 @@ function UploadItem({name, uploaded_at, file_statistics, status, upload_id}){
             <div className={styles['upload-item-column']}>
                 <div className={styles['file-column']}>
                     <MutedText>
-                        <img src="../../public/file.svg" alt="" />{truncateFileName(name)}
+                        <img src="../../public/file.svg" alt="" />{name}
                     </MutedText>
                 </div>
             </div>
@@ -28,13 +28,7 @@ function UploadItem({name, uploaded_at, file_statistics, status, upload_id}){
                     </MutedText>
                 </div>
             </div>
-            <div className={styles['upload-item-column']}>
-                <div className={styles['file-statistics-column']}>
-                    <MutedText>
-                {file_statistics}
-                </MutedText>
-                </div>
-            </div>
+           
             <div className={styles['upload-item-column']}>
                 <div className={styles['status-column']}>
                     <Badge 

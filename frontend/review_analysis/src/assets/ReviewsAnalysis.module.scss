@@ -1,0 +1,57 @@
+.header-container{
+
+    h1{
+        margin: 0;
+        font-size: 23px;
+        max-width: 350px;
+        font-weight: 800;
+    }
+}
+
+.info-container{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: start;
+    
+}
+
+.filename{
+    font-size: 64px;
+    font-weight: 800;
+    display: inline-block;
+}
+
+.uploaded-at{
+    font-size: 24px;
+    font-weight: 400;
+    color: #868686;
+}
+
+.badge{
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 15px;
+}
+
+.sources-container{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    h2{
+        margin: 0;
+    }
+}
+
+.chart-info-container{
+    display: flex;
+    padding-top: 60px;
+
+}
+
+.chart-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}

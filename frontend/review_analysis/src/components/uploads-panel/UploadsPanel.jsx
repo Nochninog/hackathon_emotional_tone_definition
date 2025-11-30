@@ -9,19 +9,20 @@ function UploadsPanel({uploads}){
             <div className={styles['file-info-header']}>
                 <p className={styles['file-info-title']}>Файл</p>
                 <p className={styles['file-info-title']}>Дата загрузки</p>
-                <p className={styles['file-info-title']}>Статистика по файлу</p>
+                {/* <p className={styles['file-info-title']}>Статистика по файлу</p> */}
                 <p className={styles['file-info-title']}>Статус обработки</p>
                 <p className={styles['file-info-title']}>Просмотр</p>
             </div>
-            {uploads.map(upload => 
+            <div className={styles['uploads-container']}>{uploads.map(upload => 
             <UploadItem 
                 name={upload.filename} 
                 uploaded_at={upload.uploaded_at}
-                file_statistics={"upload.file_statistics"}
+                // file_statistics={"upload.file_statistics"}
                 status={upload.status}
                 upload_id={upload.upload_id}
             />
-            )}
+            )}</div>
+            
             
         </div>
     )
