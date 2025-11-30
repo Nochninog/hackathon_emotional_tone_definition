@@ -50,7 +50,7 @@ alembic upgrade head
 alembic upgrade head
 ```
 
-Далее необходимо получить архив с весами модели и распаковать в папку classification_models/rubert_sentiment_v2 в корне проекта. (?)
+Далее необходимо получить архив с весами модели и распаковать в папку classification_models/rubert_sentiment_v2 в корне проекта. Архив можно получить по ссылке: https://disk.yandex.ru/d/Bdv9SX-qNSVlJA
 
 После этого необходимо перезапустить приложение
 ```bash
