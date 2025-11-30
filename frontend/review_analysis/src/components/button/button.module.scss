@@ -1,0 +1,18 @@
+.main-button{
+
+    border: none;
+    border-radius: 10px;
+    background-color: #E12A43;
+    padding: 10px 30px;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+
+    cursor: pointer;
+
+    &:active{
+        background-color: #B81F34;
+    }
+
+    
+}
