@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef} from "react";
+import { Link } from "react-router-dom";
 import styles from "../assets/MainPage.module.scss";
 import '../assets/global.scss'
 import Button from "../components/button/Button";
