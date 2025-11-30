@@ -47,8 +47,32 @@ services:
     depends_on:
       - rabbitmq
       - postgres
+    
+    volumes:
+      - ./app:/app/app
+      - ./common:/app/common
+      - ./uploads:/app/uploads
 
     command: python -m uvicorn app.uploads_control_service.main:app --host 0.0.0.0 --port 8080
+    networks:
+      - app_network
+
+  text_processing_service:
+    build:
+      context: .
+      dockerfile: dockerfiles/text_processing_service.dockerfile
+    
+    env_file: .env
+    depends_on:
+      - rabbitmq
+      - postgres
+    
+    volumes:
+      - ./app:/app/app
+      - ./common:/app/common
+      - ./uploads:/app/uploads
+
+    command: python -m app.text_processing_service.main
     networks:
       - app_network
 
