@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import select, update
+from sqlalchemy import select, update, func
 
 from ...adapters.storage import ITextStorage
 from ...domain.models import Text, TextStatus
@@ -43,10 +43,25 @@ class SqlAlchemyTextStorage(ITextStorage):
     async def get_texts_by_upload_id(
         self,
         upload_id: int,
+        limit: int = -1,
+        offset: int = 0,
     ) -> Sequence[Text]:
         query = select(TextORM).where(TextORM.upload_id == upload_id)
+        if limit > 0:
+            query = query.limit(limit)
+        if offset > 0:
+            query = query.offset(offset)
         texts = await self._session.scalars(query)
         return text_orms_to_models(texts)
+
+    async def count_texts_by_upload_id(
+        self,
+        upload_id: int,
+    ) -> int:
+        query = select(func.count()).select_from(
+            select(TextORM).where(TextORM.upload_id == upload_id),
+        )
+        return await self._session.scalar(query)
 
     async def get_text_by_id(
         self,

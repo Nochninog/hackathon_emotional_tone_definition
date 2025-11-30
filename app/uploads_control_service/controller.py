@@ -3,16 +3,15 @@ from __future__ import annotations
 from dataclasses import asdict
 from typing import TYPE_CHECKING, Annotated
 
-from fastapi import Body, File, Query, UploadFile
+from fastapi import Body, File, HTTPException, Path, Query, UploadFile, status
 
 from common.api.controller import BaseController
 from common.api.schemas import SUpload
-from common.usecases import create_upload_usecase, list_uploads_usecase
+from common.usecases import create_upload_usecase, list_uploads_usecase, retrieve_upload_usecase
 
 if TYPE_CHECKING:
     from common.adapters.events import IEventPublisher
     from common.adapters.file_storage import IFileStorage
-    from common.adapters.parser import IUploadParser
     from common.adapters.storage import IUnitOfWork, IUnitOfWorkFactory
 
 
@@ -21,18 +20,15 @@ class UploadsController(BaseController):
     __file_storage: IFileStorage
     __event_publisher: IEventPublisher
     __unit_of_work_factory: IUnitOfWorkFactory[IUnitOfWork]
-    __upload_parser: IUploadParser
 
     def __init__(
         self,
         file_storage: IFileStorage,
         event_publisher: IEventPublisher,
         unit_of_work_factory: IUnitOfWorkFactory[IUnitOfWork],
-        upload_parser: IUploadParser,
     ) -> None:
         super().__init__()
 
-        self.__upload_parser = upload_parser
         self.__file_storage = file_storage
         self.__event_publisher = event_publisher
         self.__unit_of_work_factory = unit_of_work_factory
@@ -52,7 +48,6 @@ class UploadsController(BaseController):
                     uow=uow,
                     file_storage=self.__file_storage,
                     event_publisher=self.__event_publisher,
-                    upload_parser=self.__upload_parser,
                     upload_file_bytes=upload_file_bytes,
                     upload_filename=str(upload_file.filename),
                     has_validation=has_validation,
@@ -77,3 +72,23 @@ class UploadsController(BaseController):
                     SUpload.model_validate(asdict(upload))
                     for upload in uploads
                 ]
+
+        @self._router.get(
+            path="/uploads/{upload_id}/",
+            response_model=SUpload,
+        )
+        async def get_upload(
+            upload_id: Annotated[int, Path()],
+        ) -> SUpload:
+            async with self.__unit_of_work_factory.with_unit_of_work() as uow:
+                try:
+                    upload = await retrieve_upload_usecase(
+                        uow=uow,
+                        upload_id=upload_id,
+                    )
+                except ValueError as e:
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                    ) from e
+
+                return SUpload.model_validate(asdict(upload))

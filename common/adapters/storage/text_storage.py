@@ -23,7 +23,16 @@ class ITextStorage(ABC):
     async def get_texts_by_upload_id(
         self,
         upload_id: int,
+        limit: int = -1,
+        offset: int = 0,
     ) -> Sequence[Text]:
+        raise NotImplementedError
+
+    @abstractmethod
+    async def count_texts_by_upload_id(
+        self,
+        upload_id: int,
+    ) -> int:
         raise NotImplementedError
 
     @abstractmethod
