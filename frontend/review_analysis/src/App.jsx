@@ -5,14 +5,9 @@ import ReviewAnalysis from "./pages/ReviewsAnalysis";
 function App() {
   return (
      <BrowserRouter>
-      {/* <nav style={{ display: "flex", gap: "20px", margin: "20px" }}>
-        <Link to="/">Главная</Link>
-        <Link to="/analyzer">Анализатор</Link>
-      </nav> */}
-
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/reviews-analysis" element={<ReviewAnalysis />} />
+        <Route path="/reviews-analysis/:id" element={<ReviewAnalysis />} />
       </Routes>
     </BrowserRouter>
   )
