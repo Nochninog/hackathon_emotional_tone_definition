@@ -33,7 +33,7 @@ export default function MainPage() {
       clearInterval(intervalRef.current);
     }
     intervalRef.current = setInterval(() => loadUploads(), 1000);
-  }, []);
+  }, [search]);
 
   return (
     <main>
